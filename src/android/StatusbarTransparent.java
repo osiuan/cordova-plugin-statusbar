@@ -14,11 +14,17 @@ public class StatusbarTransparent extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callback) throws JSONException {
 		// grab the correct methods
-		if(action.equalsIgnoreCase("enable")) {
-			if(VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-				cordova.getActivity().runOnUiThread( new Runnable() {
+		if (action.equalsIgnoreCase("enable")) {
+			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+				cordova.getActivity().runOnUiThread(new Runnable() {
 					public void run() {
-						cordova.getActivity().getWindow().addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
+						Window window = cordova.getActivity().getWindow();
+						window.addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
+						window.addFlags(LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+						window.addFlags(LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+						window.setStatusBarColor(Color.TRANSPARENT);
+						window.setNavigationBarColor(Color.TRANSPARENT);
+						window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 					}
 				});
 				callback.success();
@@ -26,9 +32,9 @@ public class StatusbarTransparent extends CordovaPlugin {
 				callback.error("not supported");
 			}
 			return true;
-		} else if(action.equalsIgnoreCase("disable")) {
-			if(VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-				cordova.getActivity().runOnUiThread( new Runnable() {
+		} else if (action.equalsIgnoreCase("disable")) {
+			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+				cordova.getActivity().runOnUiThread(new Runnable() {
 					public void run() {
 						cordova.getActivity().getWindow().clearFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
 					}
