@@ -7,6 +7,11 @@ import org.json.JSONException;
 
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+
+import android.graphics.Color;
+
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
 public class StatusbarTransparent extends CordovaPlugin {
